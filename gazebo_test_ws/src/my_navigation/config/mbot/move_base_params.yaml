@@ -1,0 +1,13 @@
+shutdown_costmaps: false
+
+oscillation_distance: 0.2
+oscillation_timeout: 0.0  # 恢复机制 陷在方圆oscillation_distance达oscillation_timeout之久，认定机器人在震荡，从而做异常处理
+
+controller_frequency: 10.0 #
+controller_patience: 15.0
+
+planner_frequency: 5.0
+planner_patience: 5.0 #5.0
+max_planning_retries: -1 #最大规划路径的重试次数 -1标识无限次
+base_global_planner: "global_planner/GlobalPlanner"
+base_local_planner: "dwa_local_planner/TebLocalPlannerROS" #最为重要的2个参数，直接指定使用哪种局部规划和全局规划

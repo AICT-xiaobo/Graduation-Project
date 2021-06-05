@@ -1,0 +1,32 @@
+digraph G {
+node [shape=box];
+"dummy" [label="dummy"];
+"base_footprint" [label="base_footprint"];
+"base_link" [label="base_link"];
+"wheel_1" [label="wheel_1"];
+"wheel_2" [label="wheel_2"];
+"wheel_3" [label="wheel_3"];
+"wheel_4" [label="wheel_4"];
+"camera_link" [label="camera_link"];
+"laser_frame" [label="laser_frame"];
+"imu_link" [label="imu_link"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"dummy" -> "dummy_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"dummy_joint" -> "base_footprint"
+"base_footprint" -> "base_footprint_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"base_footprint_joint" -> "base_link"
+"base_link" -> "base_to_wheel1" [label="xyz: 0.1 0.13 0 \nrpy: -1.5708 0 0"]
+"base_to_wheel1" -> "wheel_1"
+"base_link" -> "base_to_wheel2" [label="xyz: -0.1 0.13 0 \nrpy: -1.5708 0 0"]
+"base_to_wheel2" -> "wheel_2"
+"base_link" -> "base_to_wheel3" [label="xyz: 0.1 -0.13 0 \nrpy: -1.5708 0 0"]
+"base_to_wheel3" -> "wheel_3"
+"base_link" -> "base_to_wheel4" [label="xyz: -0.1 -0.13 0 \nrpy: -1.5708 0 0"]
+"base_to_wheel4" -> "wheel_4"
+"base_link" -> "camera_joint" [label="xyz: 0.125 0 0.175 \nrpy: 0 -0 0"]
+"camera_joint" -> "camera_link"
+"base_link" -> "hokuyo_joint" [label="xyz: 0.125 0 0.225 \nrpy: 0 -0 0"]
+"hokuyo_joint" -> "laser_frame"
+"base_link" -> "imu_joint" [label="xyz: 0.125 0 0.125 \nrpy: 0 -0 0"]
+"imu_joint" -> "imu_link"
+}

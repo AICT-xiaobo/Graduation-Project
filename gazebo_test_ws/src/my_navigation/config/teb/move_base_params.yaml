@@ -1,0 +1,13 @@
+shutdown_costmaps: false
+
+oscillation_distance: 0.2  #0.2
+oscillation_timeout:  0.0  #10.0
+
+controller_frequency: 20.0 #10
+controller_patience: 15.0  #15
+
+planner_frequency: 0.0 #5
+planner_patience: 50.0 #5
+max_planning_retries: -1
+base_global_planner: "global_planner/GlobalPlanner"
+base_local_planner: "dwa_local_planner/TebLocalPlannerROS"

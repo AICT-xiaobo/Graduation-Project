@@ -1,0 +1,9 @@
+<launch>
+<arg name="use_pure_pursuit" default="true"/>
+    <group if="$(arg use_pure_pursuit)">
+         <node name="pure_pursuit" pkg="my_navigation" type="pure_pursuit" respawn="false" output="screen">
+	 <param name="Lfc" value="0.5"/> 
+         <param name="linear" value="0.8"/>
+        </node>
+    </group>
+</launch>

@@ -1,0 +1,79 @@
+TebLocalPlannerROS:
+  odom_topic: odom
+  map_frame: /map
+
+  acc_lim_x: 2.2  #最大加速度1.5
+  acc_lim_theta: 3.4 #3.2  3.3(31.5S)
+  max_vel_x: 1.0  #最大速度1.1 1.3
+  max_vel_x_backwards: 0  #最大倒车速度
+  max_vel_theta: 2.9   #2.75  2.9
+  min_turning_radius: 0  #最小转向半径 0.17
+  is_footprint_dynamic: false
+  footprint_model:
+    type: "polygon"
+    vertices: [[0.15, 0.15], [0.15, -0.15], [-0.15, -0.15], [-0.15, 0.15]]
+
+  yaw_goal_tolerance: 1
+  xy_goal_tolerance: 0.4
+  free_goal_vel: false  #设为False时，车辆到达终点时的目标速度为0。我们已经指出，TEB是时间最优规划器。缺少目标速度约束将导致车辆“全速冲线”，即使前方有一堵墙也是如此（因为撞墙的时刻不在规划器考虑范围内了）。不过此选项在竞速比赛中比较有用。
+
+
+  dt_ref: 0.3 #轨迹的所需时间分辨率（由于时间分辨率是优化的一部分，因此轨迹不固定为dt_ref，但是如果违反dt_ref + -dt_hysteresis，则将在迭代之间调整轨迹的大小。
+
+  dt_hysteresis: 0.1 #用于根据当前时间分辨率自动调整大小的磁滞，通常大约为 建议使用dt_ref的10％。
+  min_samples: 3 #最小样本数（始终大于2）
+  global_plan_overwrite_orientation: true
+  global_plan_viapoint_sep: -0.1 #该值确定参考路径的分辨率（细分为计划的每两个连续通过点之间的最小间隔，如果为负：禁用）。
+  max_global_plan_lookahead_dist: 2.0 #指定考虑优化的全局计划子集的最大长度（累积欧几里得距离）。然后，实际长度由本地成本图大小和此最大界限的逻辑结合确定。设置为零或负数以停用此限制。
+  force_reinit_new_goal_dist: 1.0
+  feasibility_check_no_poses: 5
+  publish_feedback: false
+  allow_init_with_backwards_motion: false #如果为true，则可以通过向后运动来初始化基础轨迹，以防目标在本地成本图中落后于起点（仅在机器人配备了后部传感器的情况下才建议这样做）。
+  exact_arc_length: false #如果为真，则规划器在速度，加速度和角速度计算中使用正确的弧长（-> cpu运算时间增加），否则使用欧几里得逼近
+  shrink_horizon_backup: true
+  shrink_horizon_min_duration: 10.0
+
+  min_obstacle_dist: 0.04  #与障碍物的最小期望距离/m
+  include_costmap_obstacles: true
+  costmap_obstacles_behind_robot_dist: 1.0  #后方n米范围内的障碍物
+  inflation_dist: 0.6  #障碍物周围缓冲区，大于最小期望距离有效
+  include_dynamic_obstacles: false
+  legacy_obstacle_association: false
+  obstacle_association_force_inclusion_factor: 1.5
+  obstacle_association_cutoff_factor: 5
+  costmap_converter_plugin: ""
+  costmap_converter_spin_thread: true
+  costmap_converter_rate: 5.0
+
+  no_inner_iterations: 5
+  no_outer_iterations: 4
+  penalty_epsilon: 0.1  #w为速度的约束提供缓冲0.1 0.0--1.0
+  weight_acc_lim_x: 1.0 #最大允许平移加速度的优化权重。
+  weight_acc_lim_theta: 5.0 #最大允许角加速度的优化权重。1.0
+  weight_max_vel_x: 0.8  #最大速度权重 1.0   0.0--1000.0
+  weight_max_vel_theta: 2.0 #最大允许角速度的优化权重。1.0  0.0--1000.0
+  weight_kinematics_nh: 1000.0
+  weight_kinematics_forward_drive: 1000.0  #0-1000，数值越大。倒车惩罚越大。
+  weight_kinematics_turning_radius: 200.0  #1-1000，越大越容易达到最小转向半径。
+  weight_optimaltime: 10  #0-1000 基于轨迹的时间上的权重 0.0-1000.0  7.5
+  weight_obstacle: 50.0  #优化过程中，和障碍物最小距离的权重 0-1000
+  weight_viapoint: 1.0  #优化过程中，和全局路径采样殿距离的权重  0-1000
+  weight_inflation: 1.0  #优化过程中，膨胀区的权重 0-1000
+  weight_adapt_factor: 2.0
+
+  enable_homotopy_class_planning: true
+  enable_multithreading: true
+  max_number_classes: 4
+  selection_cost_hysteresis: 1.0
+  selection_obst_cost_scale: 100.0
+  selection_viapoint_cost_scale: 1.0
+  selection_alternative_time_cost: false
+  roadmap_graph_no_samples: 15
+  roadmap_graph_area_width: 5
+  h_signature_prescaler: 1.0
+  h_signature_threshold: 0.1
+  obstacle_heading_threshold: 0.45
+  visualize_hc_graph: false
+  viapoints_all_candidates: true
+  switching_blocking_period: 0.0
+
